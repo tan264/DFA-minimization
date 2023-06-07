@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sound.midi.Track;
+
 import model.Automaton;
 
 enum Status {
@@ -83,9 +85,14 @@ public class MyhillNerode implements Algorithm {
 		}
 		for (String state1 : states) {
 			for (String state2 : states) {
-				for (String tsymbols : dfa.getSymbols()) {
-					if (state2.contains(transitions.get(state1).get(tsymbols))) {
-						transitions.get(state1).replace(tsymbols, state2);
+				for (String symbol : dfa.getSymbols()) {
+//					original code
+//					if (state2.contains(transitions.get(state1).get(symbol))) {
+//						transitions.get(state1).replace(symbol, state2);
+//					}
+					
+					if(transitions.get(state1).containsKey(symbol) && state2.contains(transitions.get(state1).get(symbol))) {
+						transitions.get(state1).replace(symbol, state2);
 					}
 				}
 			}
